@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}{{ current_rubric.name }}{% endblock %}
+{% block content %}
+<h2>Рубрика: {{ current_rubric.name }}</h2>
+{%for bb in bbs %}
+
+    <h2><a href="{% url 'post_detail' bb.pk %}">{{ bb.title }}</a></h2>    
+
+    <p>{{ bb.body|truncatechars:200|linebreaks }}</p>
+    [<a href="{% url 'post_detail' bb.pk %}">Подробнее...</a>] 
+    Дата публикации: <strong>{{ bb.published|date:"d.m.Y" }}</strong>
+    Автор: <strong>{{ bb.author }}</strong>
+    Рубрика: <strong>
+        [<a href="{% url 'post_detail' bb.rubric_id %}">{{ bb.rubric_id }}</a>]
+    </strong>
+
+{% endfor %}
+{% endblock %}

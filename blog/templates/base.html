@@ -1,0 +1,83 @@
+<!-- templates/base.html -->
+{% load static %}
+<html>
+  <head>
+    <title>My Blog - I want to believe in Python!</title>    
+    <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+  </head>
+
+  <body class="container">
+
+    <div class="topnav">
+      <a class="active" href="">Домой</a>
+      <a href="">Новости</a>
+      <a href="">Контакты</a>
+      <div class="topnav-right">
+        <a href="">Поиск</a>
+        <a href="">О нас</a>
+      </div>
+    </div>
+
+    <div id="mySidenav" class="sidenav">
+      <a href="" id="about">О нас</a>
+      <a href="" id="blog">Блог</a>
+      <a href="" id="projects">Проекты</a>
+      <a href="" id="contact">Контакты</a>
+    </div>
+
+    <header class = "page-header">
+      <a href="{% url 'home' %}">My Blog - I want to believe in Life!</a>
+    </header>
+
+  <div class="main">
+    <div class = "container">        
+
+            {% block content %}
+            {% endblock content %}
+
+            {% for post in object_list %}
+              <div class = "div-main">
+                <a class = "a-site-title" href="{% url 'post_detail' post.pk %}"><strong>{{ post.title }}</strong></a>
+                <p class = "p-text">{{ post.body|truncatechars:350 }}</p>
+                <a class = "a-site-more-detailed" href="{% url 'post_detail' post.pk %}">[Подробнее]</a>    
+                <p class = "p-text-cat">
+                  [Рубрика: <strong>{{ post.rubric }}</strong>] 
+                  [Опубликовано: <strong>{{ post.published|date:"d.m.Y" }}</strong>] 
+                  [Автор: <strong>{{ post.author }}</strong>]
+                </p>
+              </div>
+            {% endfor %}
+    </div>
+
+    <div class="div-center">
+      {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo;&laquo;</a>
+        <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+      {% endif %}
+        <a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a> -  
+        <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;&raquo;</a>
+      {% endif %}
+    </div>
+  </div>
+
+  </body>
+
+  <footer class = "footer">
+  <div class = "container" >
+
+      <h4 class = "footer-author">Сделано за один вечер: Яндекс Практикум.</h4>
+      <p class = "footer-p">
+        Движок: Django 3.2<br>
+        Инструменты: CSS, HTML, Python, JS, SQLite3<br>
+        Студия: "Домовенок"<br>
+        E-mail: <E-Mail>thebrootos@gmail.com</E-Mail>
+      </p>
+
+  </div>
+  </footer>
+
+</html>

@@ -1,0 +1,13 @@
+<!-- templates/post_detail.html -->
+{% extends 'base.html' %}
+{% block content %}
+  <div class = "div-main">
+    <p class = "p-site-title"><strong>{{ post.title }}</strong></p>
+    <p class = "p-text">{{ object.body|linebreaks }}</p>
+    <p  class = "p-text-cat">
+      [Рубрика: <strong>{{ post.rubric }}</strong>] 
+      [Опубликовано: <strong>{{ post.published|date:"d.m.Y" }}</strong>] 
+      [Автор: <strong>{{ post.author }}</strong>]
+    </p>
+  </div>
+{% endblock content %}
